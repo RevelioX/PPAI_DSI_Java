@@ -25,8 +25,7 @@ public class Llamada {
     @Column(name = "duracion")
     int duracion;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "respuestaencuesta")
     RespuestaCliente respuestaCliente;
-
 }
