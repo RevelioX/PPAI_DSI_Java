@@ -3,7 +3,9 @@ package dsi.dsi.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "llamada")
@@ -32,8 +34,8 @@ public class Llamada {
     @JoinColumn(name = "respuestaencuesta")
     RespuestaCliente respuestaCliente;
 
-    public boolean verificarPeriodo(long fechaInicio, long fechaFin) {
-        return !(fechaLlamada.before(fechaInicio) || fechaLlamada.after(fechaFin));
 
-    }
-}
+    public String getNombreCliente() {
+        return cliente.getNombre() + " " + cliente.getApellido();
+
+}}

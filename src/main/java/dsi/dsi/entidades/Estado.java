@@ -7,30 +7,22 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "estado")
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Estado {
 
     @Id
-    @Column(name = "id_cliente")
+    @Column(name = "id_estado")
     int id;
-
 
     @Column(name = "nombre")
     String nombre;
 
-    @Column(name = "apellido")
-    String apellido;
-
     public String getNombre() {
         return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
     }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llamadas Filtradas</title>
+</head>
+<body>
+
+<h2>Filtrar Llamadas por Fecha</h2>
+
+<form action="/filtrarLlamadas" method="GET">
+    <label for="fechaInicio">Fecha de inicio:</label>
+    <input type="date" id="fechaInicio" name="fechaInicio" required>
+
+    <label for="fechaFin">Fecha de fin:</label>
+    <input type="date" id="fechaFin" name="fechaFin" required>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<!-- Aquí mostrarás las llamadas filtradas -->
+
+</body>
+</html>

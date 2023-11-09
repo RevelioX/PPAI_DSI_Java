@@ -27,4 +27,9 @@ public class CambioEstado {
     @JoinColumn(name = "id_llamada")
     Llamada llamada;
 
+    private Estado estado;
+    public boolean esActiva() {
+        return estado != null && "activa".equalsIgnoreCase(estado.getNombre());
+    }
 }
+
