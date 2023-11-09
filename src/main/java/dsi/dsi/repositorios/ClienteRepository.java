@@ -1,9 +1,9 @@
 package dsi.dsi.repositorios;
 
-import dsi.dsi.entidades.CambioEstado;
+import dsi.dsi.entidades.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaCambioEstadoDao extends JpaRepository<CambioEstado, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 }

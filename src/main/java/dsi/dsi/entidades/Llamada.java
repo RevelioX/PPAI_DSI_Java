@@ -3,7 +3,7 @@ package dsi.dsi.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "llamada")
@@ -25,7 +25,15 @@ public class Llamada {
     @Column(name = "duracion")
     int duracion;
 
+    @Column(name = "fecha_llamada")
+    Date fechaLlamada;
+
     @OneToOne
     @JoinColumn(name = "respuestaencuesta")
     RespuestaCliente respuestaCliente;
+
+    public boolean verificarPeriodo(long fechaInicio, long fechaFin) {
+        return !(fechaLlamada.before(fechaInicio) || fechaLlamada.after(fechaFin));
+
+    }
 }
