@@ -28,8 +28,8 @@ public class CambioEstado {
     Llamada llamada;
 
     private Estado estado;
-    public boolean esActiva() {
-        return estado != null && "activa".equalsIgnoreCase(estado.getNombre());
+    public String getNombreEstado() {
+            return estado.getNombre();
     }
 }
 

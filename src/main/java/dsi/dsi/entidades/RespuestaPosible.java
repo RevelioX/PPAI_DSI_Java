@@ -19,9 +19,11 @@ public class RespuestaPosible {
     @Column(name = "descripcion")
     String descripcion;
 
-
     @ManyToOne
     @JoinColumn(name = "id_pregunta")
     Pregunta pregunta;
 
+    public String getDescripcion() {
+        return descripcion;
+    }
 }

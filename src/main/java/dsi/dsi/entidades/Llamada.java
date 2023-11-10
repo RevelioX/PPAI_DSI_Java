@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,18 +25,26 @@ public class Llamada {
     @JoinColumn(name = "id_cliente")
     Cliente cliente;
 
+
     @Column(name = "duracion")
     int duracion;
 
     @Column(name = "fecha_llamada")
     Date fechaLlamada;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "respuestaencuesta")
     RespuestaCliente respuestaCliente;
 
 
     public String getNombreCliente() {
         return cliente.getNombre() + " " + cliente.getApellido();
+    }
+    public int getDuracion() {
+        return duracion;
+    }
 
-}}
+    private List<RespuestaCliente> respuestasDeEncuesta;
+
+
+}
