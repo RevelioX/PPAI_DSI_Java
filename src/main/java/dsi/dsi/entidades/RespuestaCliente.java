@@ -1,12 +1,10 @@
 package dsi.dsi.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "respuestacliente")
@@ -23,4 +21,8 @@ public class RespuestaCliente {
 
     @Column(name = "fechaencuesta")
     Date fechaEncuesta;
+
+    @OneToMany(mappedBy = "respuestaencuesta")
+    private List<RespuestaCliente> respuestasClientes;
+
 }
