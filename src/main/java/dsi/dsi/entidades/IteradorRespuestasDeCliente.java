@@ -19,4 +19,6 @@ public class IteradorRespuestasDeCliente implements Iterator<String> {
     public void remove() {
         Iterator.super.remove();
     }
+
+
 }

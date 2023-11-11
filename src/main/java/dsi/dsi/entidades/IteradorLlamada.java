@@ -17,18 +17,10 @@ public class IteradorLlamada implements Iterator<Llamada> {
         this.fechaFin = fechaFin;
     }
 
-    @Override
-    public boolean hasNext() {
-        return indiceActual < llamadas.size();
+    public void primero() {
+        indiceActual = 0;
     }
 
-    @Override
-    public Llamada next() {
-        if (hasNext()) {
-            return llamadas.get(indiceActual++);
-        }
-        return null;
-    }
 
     public boolean haTerminado() {
         return !hasNext();
@@ -41,20 +33,16 @@ public class IteradorLlamada implements Iterator<Llamada> {
         return null;
     }
 
-    public boolean verificarPeriodo(Date fechaInicio, Date fechaFin) {
-        Llamada llamadaActual = getActual();
-        if (llamadaActual != null) {
-            return llamadaActual.verificarPeriodo(fechaInicio, fechaFin);
+    @Override
+    public boolean hasNext() {
+        while (indiceActual < llamadas.size()) {
+            if (!llamadas.get(indiceActual).verificarPeriodo(fechaInicio, fechaFin) || !llamadas.get(indiceActual).verificarExistenciaDeRespuestas()) {
+                llamadas.remove(indiceActual);
+            } else {
+                indiceActual++;
+            }
         }
-        return false;
-    }
-
-    public boolean verificarExistenciaDeRespuestas() {
-        Llamada llamadaActual = getActual();
-        if (llamadaActual != null) {
-            return llamadaActual.verificarExistenciaDeRespuestas();
-        }
-        return false;
+        return indiceActual < llamadas.size();
     }
 
     public void siguiente() {
