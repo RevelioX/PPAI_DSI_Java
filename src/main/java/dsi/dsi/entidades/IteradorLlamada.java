@@ -31,4 +31,10 @@ public class IteradorLlamada implements Iterator<Llamada> {
     public void primero() {
         indiceActual = 0;
     }
+
+    public Llamada getActual() {
+        if (indiceActual >= 0 && indiceActual < llamadas.size()) {
+            return llamadas.get(indiceActual).getLlamada();
+        }
+    }
 }
