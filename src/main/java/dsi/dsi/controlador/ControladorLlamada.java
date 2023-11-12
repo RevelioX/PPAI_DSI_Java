@@ -61,7 +61,7 @@ public class ControladorLlamada {
             // Ejemplo de uso del iterador
             while (!iteradorLlamada.haTerminado()) {
                 Llamada llamadaActual = iteradorLlamada.next();
-
+                System.out.println(llamadaActual);
                 if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin)) {
                     // Realizar acciones con la llamada dentro del periodo
                 }

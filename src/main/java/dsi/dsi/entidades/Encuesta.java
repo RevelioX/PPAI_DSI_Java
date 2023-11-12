@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,7 @@ public class Encuesta {
     @Column(name = "descripcion")
     String descripcion;
 
-    @OneToMany
-    @JoinColumn(name ="id_encuesta")
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "encuesta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<Pregunta> preguntas;
 
     public List<String> coincidePregunta(List<String> descripcionesRespuestas) {
@@ -37,9 +36,7 @@ public class Encuesta {
         List<String> preguntas = new ArrayList<>();
         while(iterador.hasNext()){
             Pregunta pregunta = iterador.getActual();
-            System.out.println(pregunta);
             preguntas.add(pregunta.getPregunta());
-            System.out.println(preguntas);
             if(!pregunta.verificarRespuestas(descripcionesRespuestas)){
                 coincide = false;
             }
@@ -47,8 +44,18 @@ public class Encuesta {
         }
         if(coincide){
             return preguntas;
-        }else{
+        }else {
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Encuesta{" +
+                "id=" + id +
+                ", descripcion='" + descripcion + '\'' +
+                // Evitar llamar a toString de la lista de preguntas
+                ", preguntas=" + (preguntas == null ? "null" : "[List size=" + preguntas.size() + "]") +
+                '}';
     }
 }

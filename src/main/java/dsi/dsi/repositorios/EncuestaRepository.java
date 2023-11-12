@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EncuestaRepository extends JpaRepository<Encuesta, Integer> {
-
-    //List<Encuesta> findAll();
+  
 }
