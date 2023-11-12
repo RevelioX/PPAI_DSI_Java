@@ -33,17 +33,17 @@ public class Encuesta {
         boolean coincide = true;
         IteradorPregunta iterador = new IteradorPregunta(preguntas);
         iterador.primero();
-        List<String> preguntas = new ArrayList<>();
+        List<String> preguntasLista = new ArrayList<>();
         while(iterador.hasNext()){
             Pregunta pregunta = iterador.getActual();
-            preguntas.add(pregunta.getPregunta());
+            preguntasLista.add(pregunta.getPregunta());
             if(!pregunta.verificarRespuestas(descripcionesRespuestas)){
                 coincide = false;
             }
             iterador.next();
         }
         if(coincide){
-            return preguntas;
+            return preguntasLista;
         }else {
             return null;
         }
