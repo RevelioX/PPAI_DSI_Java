@@ -23,13 +23,15 @@ public class CambioEstado {
     @Column(name = "nombreestado")
     String nombreEstado;
 
-    @ManyToOne
-    @JoinColumn(name = "id_llamada")
-    Llamada llamada;
 
     private Estado estado;
     public String getNombreEstado() {
             return estado.getNombre();
     }
+
+    public String esActivo(){
+        return this.getEstado().getNombre();
+    }
+
 }
 

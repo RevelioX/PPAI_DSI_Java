@@ -23,6 +23,10 @@ public class RespuestaPosible {
     @JoinColumn(name = "id_pregunta")
     Pregunta pregunta;
 
+    public String mostrarDatos(){
+       return getDescripcion();
+    }
+
     public String getDescripcion() {
         return descripcion;
     }

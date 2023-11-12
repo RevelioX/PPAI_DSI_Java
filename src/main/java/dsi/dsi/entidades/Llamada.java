@@ -34,7 +34,11 @@ public class Llamada {
 
     @OneToMany
     @JoinColumn(name = "respuestaencuesta")
-    RespuestaCliente respuestaCliente;
+    List<RespuestaCliente> respuestaCliente;
+
+    @OneToOne
+    @JoinColumn(name = "cambioEstado")
+    CambioEstado cambioEstado;
 
 
     public String getNombreCliente() {
@@ -44,7 +48,25 @@ public class Llamada {
         return duracion;
     }
 
-    private List<RespuestaCliente> respuestasDeEncuesta;
+    public void mostarDatos(){
+        String cliente = this.getCliente().getNombre();
+        String estado = cambioEstado.esActivo();
+        int duracion = getDuracion();
 
+
+    }
+
+    public List<String> buscarDescripcionesDeRespuestasCliente(){
+        IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente();
+        iteradorRespuestasDeCliente.primero();
+        List<String> respuestas = null;
+        while(!iteradorRespuestasDeCliente.hasNext()){
+            RespuestaCliente actual = iteradorRespuestasDeCliente.getActual();
+            String descripcion = actual.mostrarDatosRTA();
+            respuestas.add(descripcion);
+            iteradorRespuestasDeCliente.next();
+        }
+        return respuestas;
+    }
 
 }
