@@ -2,11 +2,14 @@ package dsi.dsi.controlador;
 
 import dsi.dsi.entidades.IteradorLlamada;
 import dsi.dsi.entidades.Llamada;
+import dsi.dsi.entidades.TuplaDatosLlamadaEncuesta;
 import dsi.dsi.repositorios.LlamadaRepository;
 import dsi.dsi.servicios.LlamadaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,4 +76,18 @@ public class ControladorLlamada {
         }
     }
 
+    @RequestMapping("/llamadas")
+    @GetMapping
+    public ResponseEntity<List<Llamada>> getAll(){
+        List<Llamada> lista = llamadaService.findLlamadas();
+        return ResponseEntity.ok(lista);
+    }
+
+    @RequestMapping("llamadasXD")
+    @GetMapping
+    public ResponseEntity<?> getThis(){
+        Llamada llamada = llamadaService.findFirst();
+        TuplaDatosLlamadaEncuesta datos = llamada.mostarDatos();
+        return ResponseEntity.ok(datos);
+    }
 }

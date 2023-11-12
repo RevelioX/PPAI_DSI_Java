@@ -1,10 +1,12 @@
 package dsi.dsi.entidades;
 
+import dsi.dsi.controlador.EncuestaController;
 import dsi.dsi.repositorios.EncuestaRepository;
 import dsi.dsi.servicios.EncuestaService;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,8 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Llamada {
-
-
 
     @Id
     @Column(name = "id_llamada")
@@ -38,11 +38,10 @@ public class Llamada {
 
 
     @OneToMany
-    @JoinColumn(name = "respuestaencuesta")
+    @JoinColumn(name = "llamada_id")
     private List<RespuestaCliente> respuestaCliente;
 
     @OneToOne
-    @JoinColumn(name = "cambioestado")
     private CambioEstado cambioEstado;
 
     public String getNombreCliente() {
@@ -81,7 +80,7 @@ public class Llamada {
 
 
     public List<String> buscarDescripcionesDeRespuestasCliente(){
-        IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente();
+        IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente(respuestaCliente);
         iteradorRespuestasDeCliente.primero();
         List<String> respuestas = new ArrayList<>();
         while(!iteradorRespuestasDeCliente.hasNext()){
@@ -94,8 +93,8 @@ public class Llamada {
     }
 
     public List<Encuesta> traerEncuestas(){
-        EncuestaService service = new EncuestaService();
-        return service.findAll();
+        EncuestaController service = new EncuestaController(new EncuestaService());
+        return service.traerEncuestas();
     }
 
     public TuplaDescripcionEncuestaYPreguntas buscarDescripcionEncuestasYPreguntas(List<String> descripcionesRespuestas){

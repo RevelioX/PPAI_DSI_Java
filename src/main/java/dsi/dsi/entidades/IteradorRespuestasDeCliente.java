@@ -8,9 +8,17 @@ public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
     private List<RespuestaCliente> respuestaClientes;
     private int actual;
 
+    public IteradorRespuestasDeCliente(List<RespuestaCliente> respuestaClientes) {
+        this.respuestaClientes = respuestaClientes;
+    }
+
     @Override
     public boolean hasNext() {
-        return false;
+        if(actual == respuestaClientes.size()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     @Override
@@ -24,10 +32,7 @@ public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
     }
 
     public RespuestaCliente getActual(){
-        if (actual >= 0 && actual < respuestaClientes.size()) {
             return respuestaClientes.get(actual);
-        }
-        return null;
     }
 
     public void primero(){
