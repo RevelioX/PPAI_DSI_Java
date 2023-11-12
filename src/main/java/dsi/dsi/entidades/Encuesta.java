@@ -2,6 +2,8 @@ package dsi.dsi.entidades;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,11 @@ public class Encuesta {
 
     @OneToMany
     @JoinColumn(name ="id_encuesta")
+    @Fetch(FetchMode.JOIN)
     List<Pregunta> preguntas;
 
     public List<String> coincidePregunta(List<String> descripcionesRespuestas) {
+        System.out.println("PREGUNTAS:" + preguntas);
         boolean coincide = true;
         IteradorPregunta iterador = new IteradorPregunta(preguntas);
         iterador.primero();

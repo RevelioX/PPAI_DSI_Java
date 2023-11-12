@@ -21,6 +21,10 @@ public class Pregunta {
     @Column(name = "pregunta")
     String pregunta;
 
+    @ManyToOne
+    @JoinColumn(name = "id_encuesta")
+    Encuesta encuesta;
+
 
     public boolean verificarRespuestas(List<String> respuestas){
         return respuestas.contains(pregunta);
