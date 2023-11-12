@@ -8,7 +8,9 @@ import dsi.dsi.repositorios.LlamadaRepository;
 import dsi.dsi.servicios.EncuestaService;
 import dsi.dsi.servicios.LlamadaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class ControladorLlamada {
     }
 
     @RequestMapping(value = "/filtrarLlamadas", method = RequestMethod.GET)
-    public ModelAndView filtrarLlamadas(
+    public ResponseEntity<?> filtrarLlamadas(
             @RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicioStr,
             @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFinStr) {
 
@@ -54,30 +57,23 @@ public class ControladorLlamada {
             fechaInicio = Date.from(fechaInicioStr.atStartOfDay(ZoneId.systemDefault()).toInstant());
             fechaFin = Date.from(fechaFinStr.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-            llamadas = traerLlamadas(); // Obtener todas las llamadas
-
+            llamadas = traerLlamadas();
             IteradorLlamada iteradorLlamada = new IteradorLlamada(llamadas, fechaInicio, fechaFin);
-
-            // Ejemplo de uso del iterador
-            while (!iteradorLlamada.haTerminado()) {
-                Llamada llamadaActual = iteradorLlamada.next();
+            iteradorLlamada.primero();
+            List<Llamada> llamadasFiltradas = new ArrayList<>();
+            while (iteradorLlamada.hasNext()) {
+                Llamada llamadaActual = iteradorLlamada.getActual();
                 System.out.println(llamadaActual);
                 if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin)) {
-                    // Realizar acciones con la llamada dentro del periodo
+                    llamadasFiltradas.add(llamadaActual);
+                    //TODO && llamadaActual.verificarExistenciaDeRespuestas() agregarlo al final del if
                 }
+                iteradorLlamada.next();
 
-                if (llamadaActual.verificarExistenciaDeRespuestas()) {
-                    // Realizar acciones si hay respuestas para la llamada
-                }
             }
-
-            ModelAndView mav = new ModelAndView("llamadasFiltradas");
-            mav.addObject("llamadasFiltradas", llamadas);
-            return mav;
+            return ResponseEntity.ok(llamadasFiltradas);
         } catch (Exception e) {
-            ModelAndView mav = new ModelAndView("error");
-            mav.addObject("mensaje", "Ocurrió un error al filtrar las llamadas");
-            return mav;
+            return null;
         }
     }
 

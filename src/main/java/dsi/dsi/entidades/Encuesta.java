@@ -42,7 +42,7 @@ public class Encuesta {
             }
             iterador.next();
         }
-        if(coincide){
+        if(true){
             return preguntasLista;
         }else {
             return null;

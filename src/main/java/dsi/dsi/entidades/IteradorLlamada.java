@@ -27,28 +27,23 @@ public class IteradorLlamada implements Iterator<Llamada> {
     }
 
     public Llamada getActual() {
-        if (indiceActual >= 0 && indiceActual < llamadas.size()) {
-            return llamadas.get(indiceActual);
-        }
-        return null;
+        return llamadas.get(indiceActual);
     }
+
+
 
     @Override
     public boolean hasNext() {
-        while (indiceActual < llamadas.size()) {
-            if (!llamadas.get(indiceActual).verificarPeriodo(fechaInicio, fechaFin) || !llamadas.get(indiceActual).verificarExistenciaDeRespuestas()) {
-                llamadas.remove(indiceActual);
-            } else {
-                indiceActual++;
-            }
+        if(indiceActual == llamadas.size()){
+            return false;
+        }else{
+            return true;
         }
-        return indiceActual < llamadas.size();
     }
 
+    @Override
     public Llamada next() {
-        if (!haTerminado()) {
-            indiceActual++;
-        }
+        indiceActual = indiceActual + 1;
         return null;
     }
 
