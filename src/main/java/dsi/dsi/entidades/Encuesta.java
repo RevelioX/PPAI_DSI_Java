@@ -23,6 +23,7 @@ public class Encuesta {
     String descripcion;
 
     @OneToMany
+    @JoinColumn(name ="id_encuesta")
     List<Pregunta> preguntas;
 
     public List<String> coincidePregunta(List<String> descripcionesRespuestas) {

@@ -23,28 +23,27 @@ public class Llamada {
 
     @Id
     @Column(name = "id_llamada")
-    int id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
-    Cliente cliente;
+    private Cliente cliente;
 
 
     @Column(name = "duracion")
-    int duracion;
+    private int duracion;
 
-    @Column(name = "fecha_llamada")
-    Date fechaLlamada;
+    @Column(name = "fechallamada")
+    private Date fechaLlamada;
 
 
     @OneToMany
-    @JoinColumn(name = "respuestaCliente")
-    List<RespuestaCliente> respuestaCliente;
+    @JoinColumn(name = "respuestaencuesta")
+    private List<RespuestaCliente> respuestaCliente;
 
     @OneToOne
-    @JoinColumn(name = "cambioEstado")
-    CambioEstado cambioEstado;
-
+    @JoinColumn(name = "cambioestado")
+    private CambioEstado cambioEstado;
 
     public String getNombreCliente() {
         return cliente.getNombre() + " " + cliente.getApellido();

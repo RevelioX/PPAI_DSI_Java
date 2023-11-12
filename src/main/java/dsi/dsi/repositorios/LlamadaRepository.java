@@ -14,5 +14,5 @@ public interface LlamadaRepository extends JpaRepository<Llamada, Integer> {
 
     List<Llamada> findByFechaLlamadaBetween(Date fechaInicio, Date fechaFin);
 
-    List<Llamada> findAll();
+//    List<Llamada> findAll();
 }

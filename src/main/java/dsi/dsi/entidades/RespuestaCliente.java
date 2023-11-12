@@ -17,20 +17,17 @@ public class RespuestaCliente {
 
     @Id
     @Column(name = "id_respuestacliente")
-    int id;
+    private int id;
 
     @Column(name = "fechaencuesta")
-    Date fechaEncuesta;
+    private Date fechaEncuesta;
 
     @ManyToOne
-    @JoinColumn(name = "respuestaSeleccionada")
+    @JoinColumn(name = "respuestaseleccionada")
     private RespuestaPosible respuestaSeleccionada;
 
 
     public String mostrarDatosRTA(){
         return respuestaSeleccionada.mostrarDatos();
     }
-
-    @OneToMany(mappedBy = "respuestaencuesta")
-    private List<RespuestaCliente> respuestasClientes;
 }

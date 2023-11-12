@@ -3,6 +3,7 @@ package dsi.dsi.controlador;
 import dsi.dsi.entidades.IteradorLlamada;
 import dsi.dsi.entidades.Llamada;
 import dsi.dsi.repositorios.LlamadaRepository;
+import dsi.dsi.servicios.LlamadaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,10 @@ public class ControladorLlamada {
     private List<Llamada> llamadas;
 
     @Autowired
-    private LlamadaRepository llamadaRepository;
+    private LlamadaService llamadaService;
 
     public List<Llamada> traerLlamadas() {
-        return llamadaRepository.findAll();
+        return llamadaService.findLlamadas();
     }
 
     public void setLlamadas(List<Llamada> llamadas) {

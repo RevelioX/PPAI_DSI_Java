@@ -21,6 +21,7 @@ public class Pregunta {
     @Column(name = "pregunta")
     String pregunta;
 
+
     public boolean verificarRespuestas(List<String> respuestas){
         return respuestas.contains(pregunta);
     }

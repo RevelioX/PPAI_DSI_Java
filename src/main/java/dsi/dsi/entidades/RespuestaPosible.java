@@ -14,14 +14,18 @@ public class RespuestaPosible {
 
     @Id
     @Column(name = "id_respuestaposible")
-    int id;
+    private int id;
 
     @Column(name = "descripcion")
-    String descripcion;
+    private String descripcion;
 
     @ManyToOne
     @JoinColumn(name = "id_pregunta")
-    Pregunta pregunta;
+    private Pregunta pregunta;
+
+    @Column(name = "valor")
+    private int valor;
+
 
     public String mostrarDatos(){
        return getDescripcion();

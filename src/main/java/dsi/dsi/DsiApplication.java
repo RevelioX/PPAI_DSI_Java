@@ -12,10 +12,6 @@ public class DsiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DsiApplication.class, args);
-
-		LlamadaService llamadaService = new LlamadaService();
-		List<Llamada> llamadas = llamadaService.findAll();
-		System.out.println(llamadas);
 	}
 
 }

@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class LlamadaService {
     @Autowired
-    LlamadaRepository llamadaRepository;
+    private LlamadaRepository llamadaRepository;
 
-    public List<Llamada> findAll(){
+    public List<Llamada> findLlamadas(){
         List<Llamada> llamadas = llamadaRepository.findAll();
         return llamadas;
     }
