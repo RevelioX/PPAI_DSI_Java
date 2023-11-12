@@ -17,4 +17,6 @@ public class EncuestaService {
         List<Encuesta> encuestas = encuestaRepository.findAll();
         return encuestas;
     }
+
+
 }

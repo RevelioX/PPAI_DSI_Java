@@ -1,9 +1,11 @@
 package dsi.dsi.controlador;
 
+import dsi.dsi.entidades.Encuesta;
 import dsi.dsi.entidades.IteradorLlamada;
 import dsi.dsi.entidades.Llamada;
 import dsi.dsi.entidades.TuplaDatosLlamadaEncuesta;
 import dsi.dsi.repositorios.LlamadaRepository;
+import dsi.dsi.servicios.EncuestaService;
 import dsi.dsi.servicios.LlamadaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +33,9 @@ public class ControladorLlamada {
 
     @Autowired
     private LlamadaService llamadaService;
+
+    @Autowired
+    private EncuestaService encuestaService;
 
     public List<Llamada> traerLlamadas() {
         return llamadaService.findLlamadas();
@@ -87,7 +92,8 @@ public class ControladorLlamada {
     @GetMapping
     public ResponseEntity<?> getThis(){
         Llamada llamada = llamadaService.findFirst();
-        TuplaDatosLlamadaEncuesta datos = llamada.mostarDatos();
+        List<Encuesta> encuestas = encuestaService.findAll();
+        TuplaDatosLlamadaEncuesta datos = llamada.mostarDatos(encuestas);
         return ResponseEntity.ok(datos);
     }
 }

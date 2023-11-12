@@ -14,11 +14,16 @@ public class IteradorEncuesta implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return false;
+        if(actual == encuestas.size()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     @Override
     public Object next() {
+        actual = actual + 1;
         return null;
     }
 

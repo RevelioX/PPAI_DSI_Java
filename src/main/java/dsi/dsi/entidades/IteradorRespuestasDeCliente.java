@@ -23,6 +23,7 @@ public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
 
     @Override
     public RespuestaCliente next() {
+        actual = actual + 1;
         return null;
     }
 

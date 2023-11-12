@@ -27,6 +27,7 @@ public class RespuestaCliente {
     private RespuestaPosible respuestaSeleccionada;
 
 
+
     public String mostrarDatosRTA(){
         return respuestaSeleccionada.mostrarDatos();
     }

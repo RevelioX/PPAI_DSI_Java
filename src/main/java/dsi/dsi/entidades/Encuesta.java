@@ -33,7 +33,9 @@ public class Encuesta {
         List<String> preguntas = new ArrayList<>();
         while(iterador.hasNext()){
             Pregunta pregunta = iterador.getActual();
+            System.out.println(pregunta);
             preguntas.add(pregunta.getPregunta());
+            System.out.println(preguntas);
             if(!pregunta.verificarRespuestas(descripcionesRespuestas)){
                 coincide = false;
             }

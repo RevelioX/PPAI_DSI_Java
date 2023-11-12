@@ -9,7 +9,11 @@ public class IteradorPregunta implements Iterator {
     private int actual;
     @Override
     public boolean hasNext() {
-        return false;
+        if(actual == preguntas.size()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public IteradorPregunta(List<Pregunta> preguntas) {
@@ -18,6 +22,8 @@ public class IteradorPregunta implements Iterator {
 
     @Override
     public Object next() {
+
+        actual = actual + 1;
         return null;
     }
 

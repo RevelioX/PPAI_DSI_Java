@@ -51,12 +51,12 @@ public class Llamada {
         return duracion;
     }
 
-    public TuplaDatosLlamadaEncuesta mostarDatos() {
+    public TuplaDatosLlamadaEncuesta mostarDatos(List<Encuesta> encuestas) {
         String cliente = this.getCliente().getNombre();
         String estado = cambioEstado.esActivo();
         int duracion = getDuracion();
         List<String> descripcionesRespuestas = buscarDescripcionesDeRespuestasCliente();
-        TuplaDescripcionEncuestaYPreguntas tupla = buscarDescripcionEncuestasYPreguntas(descripcionesRespuestas);
+        TuplaDescripcionEncuestaYPreguntas tupla = buscarDescripcionEncuestasYPreguntas(encuestas,descripcionesRespuestas);
         return new TuplaDatosLlamadaEncuesta(cliente,estado,duracion,tupla.getDescEncuesta(),tupla.getPreguntas(),descripcionesRespuestas);
     }
 
@@ -64,7 +64,7 @@ public class Llamada {
         return fechaLlamada;
     }
 
-    public List<RespuestaCliente> getRespuestasCliente() {
+    public List<RespuestaCliente> getRespuestaCliente() {
         return (List<RespuestaCliente>) respuestaCliente;
     }
 
@@ -74,7 +74,7 @@ public class Llamada {
     }
 
     public boolean verificarExistenciaDeRespuestas() {
-        List<RespuestaCliente> respuestas = this.getRespuestasCliente();
+        List<RespuestaCliente> respuestas = this.getRespuestaCliente();
         return respuestas != null && !respuestas.isEmpty();
     }
 
@@ -83,7 +83,7 @@ public class Llamada {
         IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente(respuestaCliente);
         iteradorRespuestasDeCliente.primero();
         List<String> respuestas = new ArrayList<>();
-        while(!iteradorRespuestasDeCliente.hasNext()){
+        while(iteradorRespuestasDeCliente.hasNext()){
             RespuestaCliente actual = iteradorRespuestasDeCliente.getActual();
             String descripcion = actual.mostrarDatosRTA();
             respuestas.add(descripcion);
@@ -92,13 +92,13 @@ public class Llamada {
         return respuestas;
     }
 
-    public List<Encuesta> traerEncuestas(){
-        EncuestaController service = new EncuestaController(new EncuestaService());
-        return service.traerEncuestas();
-    }
+    //public List<Encuesta> traerEncuestas(){
+    //    EncuestaController service = new EncuestaController();
+     //   return service.traerEncuestas();
+   // }
 
-    public TuplaDescripcionEncuestaYPreguntas buscarDescripcionEncuestasYPreguntas(List<String> descripcionesRespuestas){
-        List<Encuesta> encuestas = traerEncuestas();
+    public TuplaDescripcionEncuestaYPreguntas buscarDescripcionEncuestasYPreguntas(List<Encuesta> encuestas,List<String> descripcionesRespuestas){
+        //List<Encuesta> encuestas = traerEncuestas();
         IteradorEncuesta iterador = new IteradorEncuesta(encuestas);
         List<String> preguntas = new ArrayList<>();
         String descripcionEncuesta = "";
@@ -106,8 +106,10 @@ public class Llamada {
         while(iterador.hasNext()){
             Encuesta encuesta = iterador.getActual();
             preguntas = encuesta.coincidePregunta(descripcionesRespuestas);
+            System.out.println(preguntas);
             if(preguntas != null){
                 descripcionEncuesta = encuesta.getDescripcion();
+                System.out.println(descripcionEncuesta);
                 iterador.cortarIteracion();
             }
         }
