@@ -28,8 +28,9 @@ public class RespuestaCliente {
 
 
     public String mostrarDatosRTA(){
-        return respuestaSeleccionada.getDescripcion();
+        return respuestaSeleccionada.mostrarDatos();
     }
 
-
+    @OneToMany(mappedBy = "respuestaencuesta")
+    private List<RespuestaCliente> respuestasClientes;
 }

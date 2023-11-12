@@ -3,8 +3,6 @@ package dsi.dsi.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +30,8 @@ public class Llamada {
     @Column(name = "fecha_llamada")
     Date fechaLlamada;
 
+
+
     @OneToMany
     @JoinColumn(name = "respuestaencuesta")
     List<RespuestaCliente> respuestaCliente;
@@ -48,13 +48,29 @@ public class Llamada {
         return duracion;
     }
 
-    public void mostarDatos(){
+    public void mostarDatos() {
         String cliente = this.getCliente().getNombre();
         String estado = cambioEstado.esActivo();
         int duracion = getDuracion();
-
-
     }
+    public Date getFechaLlamada() {
+        return fechaLlamada;
+    }
+
+    public List<RespuestaCliente> getRespuestasCliente() {
+        return (List<RespuestaCliente>) respuestaCliente;
+    }
+
+    public boolean verificarPeriodo(Date fechaInicio, Date fechaFin) {
+        Date fechaLlamada = this.getFechaLlamada();
+        return fechaLlamada.after(fechaInicio) && fechaLlamada.before(fechaFin);
+    }
+
+    public boolean verificarExistenciaDeRespuestas() {
+        List<RespuestaCliente> respuestas = this.getRespuestasCliente();
+        return respuestas != null && !respuestas.isEmpty();
+    }
+
 
     public List<String> buscarDescripcionesDeRespuestasCliente(){
         IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente();

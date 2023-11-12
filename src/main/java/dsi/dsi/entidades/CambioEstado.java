@@ -13,24 +13,25 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CambioEstado {
+
     @Id
     @Column(name = "id_cambioestado")
-    int id;
+    private int id;
 
     @Column(name = "fechainicio")
-    Date fechaInicio;
+    private Date fechaInicio;
 
+    @OneToOne
     @Column(name = "nombreestado")
-    String nombreEstado;
+    private Estado nombreEstado;
 
 
-    private Estado estado;
     public String getNombreEstado() {
-            return estado.getNombre();
+            return nombreEstado.getNombre();
     }
 
     public String esActivo(){
-        return this.getEstado().getNombre();
+        return this.getNombreEstado();
     }
 
 }

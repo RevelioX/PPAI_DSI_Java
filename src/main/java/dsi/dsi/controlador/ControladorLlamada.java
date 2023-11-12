@@ -1,8 +1,10 @@
 package dsi.dsi.controlador;
 
+import dsi.dsi.entidades.IteradorLlamada;
 import dsi.dsi.entidades.Llamada;
 import dsi.dsi.repositorios.LlamadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -19,33 +20,56 @@ import java.util.List;
 @Controller
 public class ControladorLlamada {
 
+    private Date fechaFin;
+    private Date fechaInicio;
+
+    private List<Llamada> llamadas;
+
     @Autowired
     private LlamadaRepository llamadaRepository;
 
+    public List<Llamada> traerLlamadas() {
+        return llamadaRepository.findAll();
+    }
+
+    public void setLlamadas(List<Llamada> llamadas) {
+        this.llamadas = llamadas;
+    }
+
     @RequestMapping(value = "/filtrarLlamadas", method = RequestMethod.GET)
-    public ModelAndView filtrarPorPeriodo(
-            @RequestParam("fechaInicio") String fechaInicioStr,
-            @RequestParam("fechaFin") String fechaFinStr) {
+    public ModelAndView filtrarLlamadas(
+            @RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicioStr,
+            @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFinStr) {
 
         try {
-            LocalDate fechaInicio = LocalDate.parse(fechaInicioStr);
-            LocalDate fechaFin = LocalDate.parse(fechaFinStr);
+            fechaInicio = Date.from(fechaInicioStr.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            fechaFin = Date.from(fechaFinStr.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-            List<Llamada> llamadasFiltradas = llamadaRepository.findByFechaLlamadaBetween(
-                    Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                    Date.from(fechaFin.atStartOfDay(ZoneId.systemDefault()).toInstant())
-            );
+            llamadas = traerLlamadas(); // Obtener todas las llamadas
+
+            IteradorLlamada iteradorLlamada = new IteradorLlamada(llamadas, fechaInicio, fechaFin);
+
+            // Ejemplo de uso del iterador
+            while (!iteradorLlamada.haTerminado()) {
+                Llamada llamadaActual = iteradorLlamada.next();
+
+                if (iteradorLlamada.verificarPeriodo(fechaInicio, fechaFin)) {
+                    // Realizar acciones con la llamada dentro del periodo
+                }
+
+                if (iteradorLlamada.verificarExistenciaDeRespuestas()) {
+                    // Realizar acciones si hay respuestas para la llamada
+                }
+            }
 
             ModelAndView mav = new ModelAndView("llamadasFiltradas");
-            mav.addObject("llamadasFiltradas", llamadasFiltradas);
+            mav.addObject("llamadasFiltradas", llamadas);
             return mav;
-        } catch (DateTimeParseException e) {
-            // Manejar la excepción si el formato de fecha proporcionado no es válido
+        } catch (Exception e) {
             ModelAndView mav = new ModelAndView("error");
-            mav.addObject("mensaje", "Formato de fecha inválido");
+            mav.addObject("mensaje", "Ocurrió un error al filtrar las llamadas");
             return mav;
         }
     }
-
 
 }
