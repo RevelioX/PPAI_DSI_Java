@@ -3,6 +3,8 @@ package dsi.dsi.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "pregunta")
 @Data
@@ -19,7 +21,13 @@ public class Pregunta {
     @Column(name = "pregunta")
     String pregunta;
 
-    @ManyToOne
-    @JoinColumn(name = "id_encuesta")
-    Encuesta encuesta;
+    public boolean verificarRespuestas(List<String> respuestas){
+        return respuestas.contains(pregunta);
+    }
+
+    public String getPregunta(){
+        return pregunta;
+    }
+
+
 }

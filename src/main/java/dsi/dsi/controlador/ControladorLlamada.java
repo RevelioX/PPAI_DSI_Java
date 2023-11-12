@@ -53,11 +53,11 @@ public class ControladorLlamada {
             while (!iteradorLlamada.haTerminado()) {
                 Llamada llamadaActual = iteradorLlamada.next();
 
-                if (iteradorLlamada.verificarPeriodo(fechaInicio, fechaFin)) {
+                if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin)) {
                     // Realizar acciones con la llamada dentro del periodo
                 }
 
-                if (iteradorLlamada.verificarExistenciaDeRespuestas()) {
+                if (llamadaActual.verificarExistenciaDeRespuestas()) {
                     // Realizar acciones si hay respuestas para la llamada
                 }
             }

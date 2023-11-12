@@ -22,7 +22,6 @@ public class CambioEstado {
     private Date fechaInicio;
 
     @OneToOne
-    @Column(name = "nombreestado")
     private Estado nombreEstado;
 
 

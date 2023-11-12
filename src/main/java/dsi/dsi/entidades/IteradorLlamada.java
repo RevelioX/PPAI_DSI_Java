@@ -45,10 +45,11 @@ public class IteradorLlamada implements Iterator<Llamada> {
         return indiceActual < llamadas.size();
     }
 
-    public void siguiente() {
+    public Llamada next() {
         if (!haTerminado()) {
             indiceActual++;
         }
+        return null;
     }
 
 }

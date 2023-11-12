@@ -1,10 +1,10 @@
 package dsi.dsi.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "encuesta")
@@ -21,4 +21,27 @@ public class Encuesta {
 
     @Column(name = "descripcion")
     String descripcion;
+
+    @OneToMany
+    List<Pregunta> preguntas;
+
+    public List<String> coincidePregunta(List<String> descripcionesRespuestas) {
+        boolean coincide = true;
+        IteradorPregunta iterador = new IteradorPregunta(preguntas);
+        iterador.primero();
+        List<String> preguntas = new ArrayList<>();
+        while(iterador.hasNext()){
+            Pregunta pregunta = iterador.getActual();
+            preguntas.add(pregunta.getPregunta());
+            if(!pregunta.verificarRespuestas(descripcionesRespuestas)){
+                coincide = false;
+            }
+            iterador.next();
+        }
+        if(coincide){
+            return preguntas;
+        }else{
+            return null;
+        }
+    }
 }

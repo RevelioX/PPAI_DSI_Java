@@ -1,8 +1,12 @@
 package dsi.dsi.entidades;
 
+import dsi.dsi.repositorios.EncuestaRepository;
+import dsi.dsi.servicios.EncuestaService;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Llamada {
+
+
 
     @Id
     @Column(name = "id_llamada")
@@ -31,9 +37,8 @@ public class Llamada {
     Date fechaLlamada;
 
 
-
     @OneToMany
-    @JoinColumn(name = "respuestaencuesta")
+    @JoinColumn(name = "respuestaCliente")
     List<RespuestaCliente> respuestaCliente;
 
     @OneToOne
@@ -48,11 +53,15 @@ public class Llamada {
         return duracion;
     }
 
-    public void mostarDatos() {
+    public TuplaDatosLlamadaEncuesta mostarDatos() {
         String cliente = this.getCliente().getNombre();
         String estado = cambioEstado.esActivo();
         int duracion = getDuracion();
+        List<String> descripcionesRespuestas = buscarDescripcionesDeRespuestasCliente();
+        TuplaDescripcionEncuestaYPreguntas tupla = buscarDescripcionEncuestasYPreguntas(descripcionesRespuestas);
+        return new TuplaDatosLlamadaEncuesta(cliente,estado,duracion,tupla.getDescEncuesta(),tupla.getPreguntas(),descripcionesRespuestas);
     }
+
     public Date getFechaLlamada() {
         return fechaLlamada;
     }
@@ -75,7 +84,7 @@ public class Llamada {
     public List<String> buscarDescripcionesDeRespuestasCliente(){
         IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente();
         iteradorRespuestasDeCliente.primero();
-        List<String> respuestas = null;
+        List<String> respuestas = new ArrayList<>();
         while(!iteradorRespuestasDeCliente.hasNext()){
             RespuestaCliente actual = iteradorRespuestasDeCliente.getActual();
             String descripcion = actual.mostrarDatosRTA();
@@ -84,5 +93,28 @@ public class Llamada {
         }
         return respuestas;
     }
+
+    public List<Encuesta> traerEncuestas(){
+        EncuestaService service = new EncuestaService();
+        return service.findAll();
+    }
+
+    public TuplaDescripcionEncuestaYPreguntas buscarDescripcionEncuestasYPreguntas(List<String> descripcionesRespuestas){
+        List<Encuesta> encuestas = traerEncuestas();
+        IteradorEncuesta iterador = new IteradorEncuesta(encuestas);
+        List<String> preguntas = new ArrayList<>();
+        String descripcionEncuesta = "";
+        iterador.primero();
+        while(iterador.hasNext()){
+            Encuesta encuesta = iterador.getActual();
+            preguntas = encuesta.coincidePregunta(descripcionesRespuestas);
+            if(preguntas != null){
+                descripcionEncuesta = encuesta.getDescripcion();
+                iterador.cortarIteracion();
+            }
+        }
+        return new TuplaDescripcionEncuestaYPreguntas(preguntas,descripcionEncuesta);
+    }
+
 
 }
