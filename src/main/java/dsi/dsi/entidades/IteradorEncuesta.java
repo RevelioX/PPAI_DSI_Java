@@ -36,6 +36,6 @@ public class IteradorEncuesta implements Iterator {
     }
 
     public void cortarIteracion(){
-        actual = encuestas.size();
+        actual = encuestas.size() - 1;
     }
 }

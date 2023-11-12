@@ -113,6 +113,7 @@ public class Llamada {
                 System.out.println(descripcionEncuesta);
                 iterador.cortarIteracion();
             }
+            iterador.next();
         }
         return new TuplaDescripcionEncuestaYPreguntas(preguntas,descripcionEncuesta);
     }
