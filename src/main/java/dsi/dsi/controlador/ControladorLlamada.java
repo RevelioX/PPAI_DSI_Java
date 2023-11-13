@@ -1,9 +1,7 @@
 package dsi.dsi.controlador;
 
-import dsi.dsi.entidades.Encuesta;
-import dsi.dsi.entidades.IteradorLlamada;
-import dsi.dsi.entidades.Llamada;
-import dsi.dsi.entidades.TuplaDatosLlamadaEncuesta;
+import com.opencsv.CSVWriter;
+import dsi.dsi.entidades.*;
 import dsi.dsi.repositorios.LlamadaRepository;
 import dsi.dsi.servicios.EncuestaService;
 import dsi.dsi.servicios.LlamadaService;
@@ -16,11 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -91,4 +89,33 @@ public class ControladorLlamada {
         TuplaDatosLlamadaEncuesta datos = llamada.mostarDatos(encuestas);
         return ResponseEntity.ok(datos);
     }
+
+    @RequestMapping("/csv")
+    public ResponseEntity<?> crearCSV(@RequestBody DatosCSV datosCSV)  {
+        String csvFilePath = "DatosCliente.csv";
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
+            String[] header = {"Nombre", "Estado", "Duracion", "Respuesta", "Pregunta", "Encuesta"};
+            writer.writeNext(header);
+
+            String respuestas = String.join(",", datosCSV.getRespuesta());
+            String preguntas = String.join(",", datosCSV.getPreguntas());
+
+            String[] row1 = {
+                    datosCSV.getNombreCliente(),
+                    datosCSV.getEstado(),
+                    String.valueOf(datosCSV.getDuracion()),
+                    respuestas,
+                    preguntas,
+                    datosCSV.getEncuesta()
+            };
+            writer.writeNext(row1);
+
+            return ResponseEntity.ok("CSV creado Correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error generando el CSV");
+        }
+    }
+
 }
