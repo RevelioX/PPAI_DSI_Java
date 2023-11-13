@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class DatosCSV {
+
   private String nombreCliente;
   private String estado;
   private int duracion;

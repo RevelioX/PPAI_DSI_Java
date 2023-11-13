@@ -1,50 +1,44 @@
 package dsi.dsi.entidades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class IteradorLlamada implements Iterator<Llamada> {
+public class IteradorLlamada implements Iterador {
 
-    private List<Llamada> llamadas;
-    private int indiceActual = 0;
-    private Date fechaInicio;
-    private Date fechaFin;
+    List<Llamada> lista;
+    int actual;
 
-    public IteradorLlamada(List<Llamada> llamadas, Date fechaInicio, Date fechaFin) {
-        this.llamadas = llamadas;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+
+
+    public IteradorLlamada(List<Llamada> encuestas) {
+        this.lista = encuestas;
     }
-
-    public void primero() {
-        indiceActual = 0;
-    }
-
 
     public boolean haTerminado() {
-        return !hasNext();
-    }
-
-    public Llamada getActual() {
-        return llamadas.get(indiceActual);
-    }
-
-
-
-    @Override
-    public boolean hasNext() {
-        if(indiceActual == llamadas.size()){
+        if(actual >= lista.size()){
             return false;
         }else{
             return true;
         }
     }
-
     @Override
-    public Llamada next() {
-        indiceActual = indiceActual + 1;
-        return null;
+    public void siguiente() {
+        actual = actual + 1;
+    }
+
+    public Llamada getActual(){
+        return lista.get(actual);
+    }
+
+    public void primero(){
+        actual = 0;
+    }
+
+    public void cortarIteracion(){
+        actual = lista.size();
     }
 
 }
+

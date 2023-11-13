@@ -54,15 +54,15 @@ public class ControladorLlamada {
             fechaFin = Date.from(fechaFinStr.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             llamadas = traerLlamadas();
-            IteradorLlamada iteradorLlamada = new IteradorLlamada(llamadas, fechaInicio, fechaFin);
+            IteradorLlamada iteradorLlamada = new IteradorLlamada(llamadas);
             iteradorLlamada.primero();
             List<Llamada> llamadasFiltradas = new ArrayList<>();
-            while (iteradorLlamada.hasNext()) {
+            while (iteradorLlamada.haTerminado()) {
                 Llamada llamadaActual = iteradorLlamada.getActual();
                 if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin) && llamadaActual.verificarExistenciaDeRespuestas()) {
                     llamadasFiltradas.add(llamadaActual);
                 }
-                iteradorLlamada.next();
+                iteradorLlamada.siguiente();
 
             }
             if (llamadasFiltradas.isEmpty()) {

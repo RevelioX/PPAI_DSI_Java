@@ -83,11 +83,11 @@ public class Llamada {
         IteradorRespuestasDeCliente iteradorRespuestasDeCliente = new IteradorRespuestasDeCliente(respuestaCliente);
         iteradorRespuestasDeCliente.primero();
         List<String> respuestas = new ArrayList<>();
-        while(iteradorRespuestasDeCliente.hasNext()){
+        while(iteradorRespuestasDeCliente.haTerminado()){
             RespuestaCliente actual = iteradorRespuestasDeCliente.getActual();
             String descripcion = actual.mostrarDatosRTA();
             respuestas.add(descripcion);
-            iteradorRespuestasDeCliente.next();
+            iteradorRespuestasDeCliente.siguiente();
         }
         return respuestas;
     }
@@ -103,7 +103,7 @@ public class Llamada {
         List<String> preguntas = new ArrayList<>();
         String descripcionEncuesta = "";
         iterador.primero();
-        while(iterador.hasNext()){
+        while(iterador.haTerminado()){
             Encuesta encuesta = iterador.getActual();
             System.out.println("ENCUESTA ID:" + encuesta.getId());
             preguntas = encuesta.coincidePregunta(descripcionesRespuestas);
@@ -112,7 +112,7 @@ public class Llamada {
                 descripcionEncuesta = encuesta.getDescripcion();
                 iterador.cortarIteracion();
             }
-            iterador.next();
+            iterador.siguiente();
         }
         return new TuplaDescripcionEncuestaYPreguntas(preguntas,descripcionEncuesta);
     }

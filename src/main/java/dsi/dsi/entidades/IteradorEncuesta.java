@@ -3,32 +3,29 @@ package dsi.dsi.entidades;
 import java.util.Iterator;
 import java.util.List;
 
-public class IteradorEncuesta implements Iterator {
+public class IteradorEncuesta implements Iterador {
 
-    List<Encuesta> encuestas;
+    List<Encuesta> lista;
     int actual;
 
     public IteradorEncuesta(List<Encuesta> encuestas) {
-        this.encuestas = encuestas;
+        this.lista = encuestas;
     }
 
-    @Override
-    public boolean hasNext() {
-        if(actual >= encuestas.size()){
+    public boolean haTerminado() {
+        if(actual >= lista.size()){
             return false;
         }else{
             return true;
         }
     }
-
     @Override
-    public Object next() {
+    public void siguiente() {
         actual = actual + 1;
-        return null;
     }
 
     public Encuesta getActual(){
-        return encuestas.get(actual);
+        return lista.get(actual);
     }
 
     public void primero(){
@@ -36,6 +33,6 @@ public class IteradorEncuesta implements Iterator {
     }
 
     public void cortarIteracion(){
-        actual = encuestas.size();
+        actual = lista.size();
     }
 }

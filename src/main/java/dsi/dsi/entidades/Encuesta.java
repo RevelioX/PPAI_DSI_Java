@@ -33,13 +33,13 @@ public class Encuesta {
         IteradorPregunta iterador = new IteradorPregunta(preguntas);
         iterador.primero();
         List<String> preguntasLista = new ArrayList<>();
-        while(iterador.hasNext()){
+        while(iterador.haTerminado()){
             Pregunta pregunta = iterador.getActual();
             preguntasLista.add(pregunta.getPregunta());
             if(!pregunta.verificarRespuestas(descripcionesRespuestas)){
                 coincide = false;
             }
-            iterador.next();
+            iterador.siguiente();
         }
         if(coincide){
             return preguntasLista;

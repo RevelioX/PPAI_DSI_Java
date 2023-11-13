@@ -3,18 +3,17 @@ package dsi.dsi.entidades;
 import java.util.Iterator;
 import java.util.List;
 
-public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
+public class IteradorRespuestasDeCliente implements Iterador {
 
-    private List<RespuestaCliente> respuestaClientes;
-    private int actual;
+    List<RespuestaCliente> lista;
+    int actual;
 
-    public IteradorRespuestasDeCliente(List<RespuestaCliente> respuestaClientes) {
-        this.respuestaClientes = respuestaClientes;
+    public IteradorRespuestasDeCliente(List<RespuestaCliente> encuestas) {
+        this.lista = encuestas;
     }
 
-    @Override
-    public boolean hasNext() {
-        if(actual >= respuestaClientes.size()){
+    public boolean haTerminado() {
+        if(actual >= lista.size()){
             return false;
         }else{
             return true;
@@ -22,22 +21,19 @@ public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
     }
 
     @Override
-    public RespuestaCliente next() {
+    public void siguiente() {
         actual = actual + 1;
-        return null;
-    }
-
-    @Override
-    public void remove() {
-        Iterator.super.remove();
     }
 
     public RespuestaCliente getActual(){
-            return respuestaClientes.get(actual);
+        return lista.get(actual);
     }
 
     public void primero(){
         actual = 0;
     }
 
+    public void cortarIteracion(){
+        actual = lista.size();
+    }
 }
