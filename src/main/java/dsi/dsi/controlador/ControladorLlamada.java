@@ -62,9 +62,8 @@ public class ControladorLlamada {
             while (iteradorLlamada.hasNext()) {
                 Llamada llamadaActual = iteradorLlamada.getActual();
                 System.out.println(llamadaActual);
-                if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin)) {
+                if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin) && llamadaActual.verificarExistenciaDeRespuestas()) {
                     llamadasFiltradas.add(llamadaActual);
-                    //TODO && llamadaActual.verificarExistenciaDeRespuestas() agregarlo al final del if
                 }
                 iteradorLlamada.next();
 
