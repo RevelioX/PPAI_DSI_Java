@@ -14,7 +14,7 @@ public class IteradorRespuestasDeCliente implements Iterator<RespuestaCliente> {
 
     @Override
     public boolean hasNext() {
-        if(actual == respuestaClientes.size()){
+        if(actual >= respuestaClientes.size()){
             return false;
         }else{
             return true;

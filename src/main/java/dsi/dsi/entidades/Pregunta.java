@@ -27,8 +27,20 @@ public class Pregunta {
     @JoinColumn(name = "id_encuesta")
     private Encuesta encuesta;
 
+    @OneToMany
+    @JoinColumn(name = "id_pregunta")
+    private List<RespuestaPosible> respuestaPosibles;
+
     public boolean verificarRespuestas(List<String> respuestas){
-        return respuestas.contains(pregunta);
+        boolean valor = false;
+        for(int i = 0; i < respuestas.size(); i++){
+            System.out.println("INFO :" + pregunta + respuestas.get(i) + respuestaPosibles.toString());
+            List<String> res = respuestaPosibles.stream().map( r -> r.getDescripcion()).toList();
+            if(res.contains(respuestas.get(i))){
+                valor = true;
+            }
+        }
+        return valor;
     }
 
     public String getPregunta(){

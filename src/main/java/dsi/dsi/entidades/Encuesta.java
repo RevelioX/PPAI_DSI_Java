@@ -29,7 +29,6 @@ public class Encuesta {
     List<Pregunta> preguntas;
 
     public List<String> coincidePregunta(List<String> descripcionesRespuestas) {
-        System.out.println("PREGUNTAS:" + preguntas);
         boolean coincide = true;
         IteradorPregunta iterador = new IteradorPregunta(preguntas);
         iterador.primero();
@@ -42,7 +41,7 @@ public class Encuesta {
             }
             iterador.next();
         }
-        if(true){
+        if(coincide){
             return preguntasLista;
         }else {
             return null;

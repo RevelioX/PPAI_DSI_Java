@@ -14,7 +14,7 @@ public class IteradorEncuesta implements Iterator {
 
     @Override
     public boolean hasNext() {
-        if(actual == encuestas.size()){
+        if(actual >= encuestas.size()){
             return false;
         }else{
             return true;
@@ -36,6 +36,6 @@ public class IteradorEncuesta implements Iterator {
     }
 
     public void cortarIteracion(){
-        actual = encuestas.size() - 1;
+        actual = encuestas.size();
     }
 }

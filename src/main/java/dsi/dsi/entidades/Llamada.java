@@ -105,12 +105,11 @@ public class Llamada {
         iterador.primero();
         while(iterador.hasNext()){
             Encuesta encuesta = iterador.getActual();
-            System.out.println("xd" +descripcionesRespuestas);
+            System.out.println("ENCUESTA ID:" + encuesta.getId());
             preguntas = encuesta.coincidePregunta(descripcionesRespuestas);
             System.out.println(preguntas);
             if(preguntas != null){
                 descripcionEncuesta = encuesta.getDescripcion();
-                System.out.println(descripcionEncuesta);
                 iterador.cortarIteracion();
             }
             iterador.next();

@@ -1,5 +1,6 @@
 package dsi.dsi.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,9 +20,10 @@ public class RespuestaPosible {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "id_pregunta")
-    private Pregunta pregunta;
+    // @JsonIgnore
+    // @ManyToOne
+    // @JoinColumn(name = "id_pregunta")
+    // private Pregunta pregunta;
 
     @Column(name = "valor")
     private int valor;

@@ -47,7 +47,7 @@ public class ControladorLlamada {
     }
 
     @RequestMapping(value = "/filtrarLlamadas", method = RequestMethod.GET)
-    public ResponseEntity<?> filtrarLlamadas(
+    public ResponseEntity<?> tomarPeriodo(
             @RequestParam("fechaInicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicioStr,
             @RequestParam("fechaFin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFinStr) {
 
@@ -82,10 +82,10 @@ public class ControladorLlamada {
         return ResponseEntity.ok(lista);
     }
 
-    @RequestMapping("llamadasXD")
+    @RequestMapping("/llamadaEncuesta")
     @GetMapping
-    public ResponseEntity<?> getThis(){
-        Llamada llamada = llamadaService.findFirst();
+    public ResponseEntity<?> llamadaSeleccion(@RequestParam("idLlamada") int idLlamada){
+        Llamada llamada = llamadaService.findid(idLlamada);
         List<Encuesta> encuestas = encuestaService.findAll();
         TuplaDatosLlamadaEncuesta datos = llamada.mostarDatos(encuestas);
         return ResponseEntity.ok(datos);

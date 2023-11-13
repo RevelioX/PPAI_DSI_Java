@@ -26,4 +26,8 @@ public class LlamadaService {
         Llamada llamada = llamadaRepository.getById(1);
         return llamada;
     }
+
+    public Llamada findid(int id){
+        return llamadaRepository.getById(id);
+    }
 }
