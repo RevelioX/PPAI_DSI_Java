@@ -61,16 +61,18 @@ public class ControladorLlamada {
             List<Llamada> llamadasFiltradas = new ArrayList<>();
             while (iteradorLlamada.hasNext()) {
                 Llamada llamadaActual = iteradorLlamada.getActual();
-                System.out.println(llamadaActual);
                 if (llamadaActual.verificarPeriodo(fechaInicio, fechaFin) && llamadaActual.verificarExistenciaDeRespuestas()) {
                     llamadasFiltradas.add(llamadaActual);
                 }
                 iteradorLlamada.next();
 
             }
+            if (llamadasFiltradas.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron llamadas en ese rango de fechas");
+            }
             return ResponseEntity.ok(llamadasFiltradas);
         } catch (Exception e) {
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado");
         }
     }
 
